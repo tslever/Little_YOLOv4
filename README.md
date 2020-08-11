@@ -1,6 +1,4 @@
 # Little_YOLOv4
-This description is up-to-date as of 08/09/20.
-
 Little_YOLOv4 is a CUDA C++ computer-vision / object-detection solution based on the much larger darknet / YOLOv4 API. Little_YOLOv4 detects objects in images.
 
 The Little_YOLOv4 folder within the above zipped folder contains 19 C structure-definition files; 1 VCXProj file; and 157 pairs of a function declaration file and a function definition file. Each structure has its own file; each function has its own file. There is no use of the C namespace / 'extern "C" { }'. Every function has an explicit declaration. Every structure definition and every function declaration is wrapped in an inclusion guard. Include statements are minimal and explicit.
