@@ -1,0 +1,496 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D23AD440-A146-42A4-9FD2-5836965C28B8}</ProjectGuid>
+    <RootNamespace>Little_YOLOv4</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 11.3.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(OPENCV_DIR)\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(OPENCV_DIR)\x64\vc15\lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(OPENCV_DIR)\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(OPENCV_DIR)\x64\vc15\lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(CudaToolkitIncludeDir)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>cudnn.lib;opencv_world452d.lib;cudart_static.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OPENCV_DIR)\x64\vc15\lib;%(AdditionalLibraryDirectories);$(CudaToolkitLibDir)</AdditionalLibraryDirectories>
+    </Link>
+    <CudaCompile>
+      <TargetMachinePlatform>64</TargetMachinePlatform>
+      <Include>
+      </Include>
+    </CudaCompile>
+    <CudaLink>
+      <AdditionalLibraryDirectories>$(CudaToolkitBinDir)/crt</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opencv_world452.lib</AdditionalDependencies>
+    </CudaLink>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>cudnn.lib;opencv_world452.lib;cudart_static.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <CudaCompile>
+      <TargetMachinePlatform>64</TargetMachinePlatform>
+    </CudaCompile>
+    <CudaLink>
+      <AdditionalDependencies>opencv_world452.lib</AdditionalDependencies>
+    </CudaLink>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="add_pixel.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="border_image.cpp" />
+    <ClCompile Include="box_intersection.cpp" />
+    <ClCompile Include="box_iou.cpp" />
+    <ClCompile Include="box_union.cpp" />
+    <ClCompile Include="calloc_error.cpp" />
+    <ClCompile Include="check_error.cpp" />
+    <ClCompile Include="check_error_extended.cpp" />
+    <ClCompile Include="composite_image.cpp" />
+    <ClCompile Include="convolutional_out_height.cpp" />
+    <ClCompile Include="convolution_out_width.cpp" />
+    <ClCompile Include="copy_image.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="create_convolutional_cudnn_tensors.cpp" />
+    <ClCompile Include="create_image.cpp" />
+    <ClCompile Include="cuda_free.cpp" />
+    <ClCompile Include="cuda_get_device.cpp" />
+    <ClCompile Include="cuda_gridsize.cpp" />
+    <ClCompile Include="cuda_make_array.cpp" />
+    <ClCompile Include="cuda_make_array_pointers.cpp" />
+    <ClCompile Include="cuda_make_int_array_new_api.cpp" />
+    <ClCompile Include="cuda_pull_array.cpp" />
+    <ClCompile Include="cuda_pull_array_async.cpp" />
+    <ClCompile Include="cuda_push_array.cpp" />
+    <ClCompile Include="cuda_set_device.cpp" />
+    <ClCompile Include="cudnn_check_error.cpp" />
+    <ClCompile Include="cudnn_check_error_extended.cpp" />
+    <ClCompile Include="cudnn_convolutional_setup.cpp" />
+    <ClCompile Include="cudnn_handle.cpp" />
+    <ClCompile Include="destroy_all_windows_cv.cpp" />
+    <ClCompile Include="diounms_sort.cpp" />
+    <ClCompile Include="draw_box.cpp" />
+    <ClCompile Include="draw_box_width.cpp" />
+    <ClCompile Include="draw_detections_v3.cpp" />
+    <ClCompile Include="draw_weighted_label.cpp" />
+    <ClCompile Include="embed_image.cpp" />
+    <ClCompile Include="entry_index.cpp" />
+    <ClCompile Include="error.cpp" />
+    <ClCompile Include="fgetl.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="file_error.cpp" />
+    <ClCompile Include="fill_cpu.cpp" />
+    <ClCompile Include="fill_network_boxes.cpp" />
+    <ClCompile Include="find_float_arg.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="forward_convolutional_layer_gpu.cpp" />
+    <ClCompile Include="forward_network_gpu.cpp" />
+    <ClCompile Include="forward_route_layer_gpu.cpp" />
+    <ClCompile Include="forward_shortcut_layer_gpu.cpp" />
+    <ClCompile Include="forward_upsample_layer_gpu.cpp" />
+    <ClCompile Include="forward_yolo_layer_gpu.cpp" />
+    <ClCompile Include="free_convolutional_batchnorm.cpp" />
+    <ClCompile Include="free_detections.cpp" />
+    <ClCompile Include="free_image.cpp" />
+    <ClCompile Include="free_layer.cpp" />
+    <ClCompile Include="free_layer_custom.cpp" />
+    <ClCompile Include="free_list.cpp" />
+    <ClCompile Include="free_network.cpp" />
+    <ClCompile Include="free_node.cpp" />
+    <ClCompile Include="free_ptrs.cpp" />
+    <ClCompile Include="free_section.cpp" />
+    <ClCompile Include="fuse_conv_batchnorm.cpp" />
+    <ClCompile Include="get_activation.cpp" />
+    <ClCompile Include="get_actual_detections.cpp" />
+    <ClCompile Include="get_color.cpp" />
+    <ClCompile Include="get_convolutional_workspace_size.cpp" />
+    <ClCompile Include="get_cuda_stream.cpp" />
+    <ClCompile Include="get_labels_custom.cpp" />
+    <ClCompile Include="get_label_v3.cpp" />
+    <ClCompile Include="get_network_boxes.cpp" />
+    <ClCompile Include="get_network_input_size.cpp" />
+    <ClCompile Include="get_network_output_gpu.cpp" />
+    <ClCompile Include="get_network_output_layer_gpu.cpp" />
+    <ClCompile Include="get_number_of_blocks.cpp" />
+    <ClCompile Include="get_paths.cpp" />
+    <ClCompile Include="get_pixel.cpp" />
+    <ClCompile Include="get_pixel_extend.cpp" />
+    <ClCompile Include="get_workspace_size32.cpp" />
+    <ClCompile Include="get_yolo_box.cpp" />
+    <ClCompile Include="get_yolo_detections.cpp" />
+    <ClCompile Include="image_to_mat.cpp" />
+    <ClCompile Include="imread_cvtColor_and_create_image.cpp" />
+    <ClCompile Include="imread_resize_cvtColor_and_create_image.cpp" />
+    <ClCompile Include="list_insert.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="list_to_array.cpp" />
+    <ClCompile Include="Little_YOLOv4.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="load_alphabet.cpp" />
+    <ClCompile Include="load_convolutional_weights.cpp" />
+    <ClCompile Include="load_weights.cpp" />
+    <ClCompile Include="load_weights_upto.cpp" />
+    <ClCompile Include="make_convolutional_layer.cpp" />
+    <ClCompile Include="make_empty_image.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="make_image.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="make_list.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="make_maxpool_layer.cpp" />
+    <ClCompile Include="make_network_boxes.cpp" />
+    <ClCompile Include="make_route_layer.cpp" />
+    <ClCompile Include="make_shortcut_layer.cpp" />
+    <ClCompile Include="make_upsample_layer.cpp" />
+    <ClCompile Include="make_yolo_layer.cpp" />
+    <ClCompile Include="malloc_error.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="make_network.cpp" />
+    <ClCompile Include="network_predict.cpp" />
+    <ClCompile Include="network_predict_gpu.cpp" />
+    <ClCompile Include="nms_comparator_v3.cpp" />
+    <ClCompile Include="num_detections.cpp" />
+    <ClCompile Include="option_find.cpp" />
+    <ClCompile Include="option_find_float.cpp" />
+    <ClCompile Include="option_find_int.cpp" />
+    <ClCompile Include="option_find_str.cpp" />
+    <ClCompile Include="option_insert.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="overlap.cpp" />
+    <ClCompile Include="parse_convolutional.cpp" />
+    <ClCompile Include="parse_maxpool.cpp" />
+    <ClCompile Include="parse_network_cfg_custom.cpp" />
+    <ClCompile Include="parse_net_options.cpp" />
+    <ClCompile Include="parse_route.cpp" />
+    <ClCompile Include="parse_shortcut.cpp" />
+    <ClCompile Include="parse_upsample.cpp" />
+    <ClCompile Include="parse_yolo.cpp" />
+    <ClCompile Include="parse_yolo_mask.cpp" />
+    <ClCompile Include="push_convolutional_layer.cpp" />
+    <ClCompile Include="read_cfg.cpp" />
+    <ClCompile Include="read_option.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="resize_image.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="run_detector.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="set_pixel.cpp" />
+    <ClCompile Include="show_image.cpp" />
+    <ClCompile Include="show_image_cv.cpp" />
+    <ClCompile Include="string_to_layer_type.cpp" />
+    <ClCompile Include="strip.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="test_detector.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="tile_images.cpp" />
+    <ClCompile Include="wait_key_cv.cpp" />
+    <ClCompile Include="wait_until_press_key_cv.cpp" />
+    <ClCompile Include="xcalloc.cpp" />
+    <ClCompile Include="xmalloc.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="yolo_num_detections.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="activate_array_leaky_kernel.cuh" />
+    <ClInclude Include="activate_array_logistic_kernel.cuh" />
+    <ClInclude Include="activate_array_mish_kernel.cuh" />
+    <ClInclude Include="activate_array_ongpu.cuh" />
+    <ClInclude Include="ACTIVATION.h" />
+    <ClInclude Include="add_bias_gpu.cuh" />
+    <ClInclude Include="add_bias_kernel.cuh" />
+    <ClInclude Include="add_pixel.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="BLOCK.h" />
+    <ClInclude Include="border_image.h" />
+    <ClInclude Include="box.h" />
+    <ClInclude Include="box_intersection.h" />
+    <ClInclude Include="box_iou.h" />
+    <ClInclude Include="box_union.h" />
+    <ClInclude Include="calloc_error.h" />
+    <ClInclude Include="CHECK_CUDA.h" />
+    <ClInclude Include="CHECK_CUDNN.h" />
+    <ClInclude Include="check_error.h" />
+    <ClInclude Include="check_error_extended.h" />
+    <ClInclude Include="composite_image.h" />
+    <ClInclude Include="convolutional_out_height.h" />
+    <ClInclude Include="convolutional_out_width.h" />
+    <ClInclude Include="copy_image.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="create_convolutional_cudnn_tensors.h" />
+    <ClInclude Include="create_image.h" />
+    <ClInclude Include="cuda_free.h" />
+    <ClInclude Include="cuda_get_device.h" />
+    <ClInclude Include="cuda_gridsize.h" />
+    <ClInclude Include="cuda_make_array.h" />
+    <ClInclude Include="cuda_make_array_pointers.h" />
+    <ClInclude Include="cuda_make_int_array_new_api.h" />
+    <ClInclude Include="cuda_pull_array.h" />
+    <ClInclude Include="cuda_pull_array_async.h" />
+    <ClInclude Include="cuda_push_array.h" />
+    <ClInclude Include="cuda_set_device.h" />
+    <ClInclude Include="cudnn_check_error.h" />
+    <ClInclude Include="cudnn_check_error_extended.h" />
+    <ClInclude Include="cudnn_convolutional_setup.h" />
+    <ClInclude Include="cudnn_handle.h" />
+    <ClInclude Include="destroy_all_windows_cv.h" />
+    <ClInclude Include="detection.h" />
+    <ClInclude Include="detection_with_class.h" />
+    <ClInclude Include="diounms_sort.h" />
+    <ClInclude Include="draw_box.h" />
+    <ClInclude Include="draw_box_width.h" />
+    <ClInclude Include="draw_detections_v3.h" />
+    <ClInclude Include="draw_weighted_label.h" />
+    <ClInclude Include="embed_image.h" />
+    <ClInclude Include="entry_index.h" />
+    <ClInclude Include="error.h" />
+    <ClInclude Include="fgetl.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="file_error.h" />
+    <ClInclude Include="fill_cpu.h" />
+    <ClInclude Include="fill_network_boxes.h" />
+    <ClInclude Include="find_float_arg.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="forward_convolutional_layer_gpu.h" />
+    <ClInclude Include="forward_maxpool_layer_gpu.cuh" />
+    <ClInclude Include="forward_maxpool_layer_kernel.cuh" />
+    <ClInclude Include="forward_network_gpu.h" />
+    <ClInclude Include="forward_route_layer_gpu.h" />
+    <ClInclude Include="forward_shortcut_layer_gpu.h" />
+    <ClInclude Include="forward_upsample_layer_gpu.h" />
+    <ClInclude Include="forward_yolo_layer_gpu.h" />
+    <ClInclude Include="free_convolutional_batchnorm.h" />
+    <ClInclude Include="free_detections.h" />
+    <ClInclude Include="free_image.h" />
+    <ClInclude Include="free_layer.h" />
+    <ClInclude Include="free_layer_custom.h" />
+    <ClInclude Include="free_list.h" />
+    <ClInclude Include="free_network.h" />
+    <ClInclude Include="free_node.h" />
+    <ClInclude Include="free_ptrs.h" />
+    <ClInclude Include="free_section.h" />
+    <ClInclude Include="fuse_conv_batchnorm.h" />
+    <ClInclude Include="get_activation.h" />
+    <ClInclude Include="get_actual_detections.h" />
+    <ClInclude Include="get_color.h" />
+    <ClInclude Include="get_convolutional_workspace_size.h" />
+    <ClInclude Include="get_cuda_stream.h" />
+    <ClInclude Include="get_labels_custom.h" />
+    <ClInclude Include="get_label_v3.h" />
+    <ClInclude Include="get_network_boxes.h" />
+    <ClInclude Include="get_network_input_size.h" />
+    <ClInclude Include="get_network_output_gpu.h" />
+    <ClInclude Include="get_network_output_layer_gpu.h" />
+    <ClInclude Include="get_number_of_blocks.h" />
+    <ClInclude Include="get_paths.h" />
+    <ClInclude Include="get_pixel.h" />
+    <ClInclude Include="get_pixel_extend.h" />
+    <ClInclude Include="get_workspace_size32.h" />
+    <ClInclude Include="get_yolo_box.h" />
+    <ClInclude Include="get_yolo_detections.h" />
+    <ClInclude Include="image.h" />
+    <ClInclude Include="image_to_mat.h" />
+    <ClInclude Include="imread_cvtColor_and_create_image.h" />
+    <ClInclude Include="imread_resize_cvtColor_and_create_image.h" />
+    <ClInclude Include="kvp.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="layer.h" />
+    <ClInclude Include="LAYER_TYPE.h" />
+    <ClInclude Include="list.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="list_insert.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="list_to_array.h" />
+    <ClInclude Include="load_alphabet.h" />
+    <ClInclude Include="load_convolutional_weights.h" />
+    <ClInclude Include="load_weights.h" />
+    <ClInclude Include="load_weights_upto.h" />
+    <ClInclude Include="make_convolutional_layer.h" />
+    <ClInclude Include="make_empty_image.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="make_image.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="make_list.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="make_maxpool_layer.h" />
+    <ClInclude Include="make_network.h" />
+    <ClInclude Include="make_network_boxes.h" />
+    <ClInclude Include="make_route_layer.h" />
+    <ClInclude Include="make_shortcut_layer.h" />
+    <ClInclude Include="make_upsample_layer.h" />
+    <ClInclude Include="make_yolo_layer.h" />
+    <ClInclude Include="malloc_error.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="network.h" />
+    <ClInclude Include="network_predict.h" />
+    <ClInclude Include="network_predict_gpu.h" />
+    <ClInclude Include="network_state.h" />
+    <ClInclude Include="nms_comparator_v3.h" />
+    <ClInclude Include="NMS_KIND.h" />
+    <ClInclude Include="node.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="num_detections.h" />
+    <ClInclude Include="option_find.h" />
+    <ClInclude Include="option_find_float.h" />
+    <ClInclude Include="option_find_int.h" />
+    <ClInclude Include="option_find_str.h" />
+    <ClInclude Include="option_insert.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="overlap.h" />
+    <ClInclude Include="parse_convolutional.h" />
+    <ClInclude Include="parse_maxpool.h" />
+    <ClInclude Include="parse_network_cfg_custom.h" />
+    <ClInclude Include="parse_net_options.h" />
+    <ClInclude Include="parse_route.h" />
+    <ClInclude Include="parse_shortcut.h" />
+    <ClInclude Include="parse_upsample.h" />
+    <ClInclude Include="parse_yolo.h" />
+    <ClInclude Include="parse_yolo_mask.h" />
+    <ClInclude Include="push_convolutional_layer.h" />
+    <ClInclude Include="read_cfg.h" />
+    <ClInclude Include="read_option.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="resize_image.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="run_detector.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="section.h" />
+    <ClInclude Include="set_pixel.h" />
+    <ClInclude Include="shortcut_multilayer_gpu.cuh" />
+    <ClInclude Include="shortcut_singlelayer_simple_kernel.cuh" />
+    <ClInclude Include="show_image.h" />
+    <ClInclude Include="show_image_cv.h" />
+    <ClInclude Include="simple_copy_kernel.cuh" />
+    <ClInclude Include="simple_copy_ongpu.cuh" />
+    <ClInclude Include="size_params.h" />
+    <ClInclude Include="streamInit.h" />
+    <ClInclude Include="streamsArray.h" />
+    <ClInclude Include="string_to_layer_type.h" />
+    <ClInclude Include="strip.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="test_detector.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="tile_images.h" />
+    <ClInclude Include="upsample_gpu.cuh" />
+    <ClInclude Include="upsample_kernel.cuh" />
+    <ClInclude Include="wait_key_cv.h" />
+    <ClInclude Include="wait_until_press_key_cv.h" />
+    <ClInclude Include="WEIGHTS_NORMALIZATION.h" />
+    <ClInclude Include="xcalloc.h" />
+    <ClInclude Include="xmalloc.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="yolo_num_detections.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="activate_array_leaky_kernel.cu" />
+    <CudaCompile Include="activate_array_logistic_kernel.cu" />
+    <CudaCompile Include="activate_array_mish_kernel.cu" />
+    <CudaCompile Include="activate_array_ongpu.cu" />
+    <CudaCompile Include="add_bias_gpu.cu" />
+    <CudaCompile Include="add_bias_kernel.cu" />
+    <CudaCompile Include="forward_maxpool_layer_gpu.cu" />
+    <CudaCompile Include="forward_maxpool_layer_kernel.cu" />
+    <CudaCompile Include="shortcut_multilayer_gpu.cu" />
+    <CudaCompile Include="shortcut_singlelayer_simple_kernel.cu" />
+    <CudaCompile Include="simple_copy_kernel.cu" />
+    <CudaCompile Include="simple_copy_ongpu.cu" />
+    <CudaCompile Include="upsample_gpu.cu" />
+    <CudaCompile Include="upsample_kernel.cu" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 11.3.targets" />
+  </ImportGroup>
+</Project>
